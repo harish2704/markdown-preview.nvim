@@ -35,6 +35,10 @@ M.config = {
 	-- "rust" = pre-render via mermaid-rs-renderer (mmdr) CLI (~400x faster)
 	mermaid_renderer = "js",
 
+	-- Load ELK layout engine for mermaid diagrams (requires internet; adds ~800 KB).
+	-- Enables %%{init: {"layout": "elk"}}%% in diagrams.
+	mermaid_elk = false,
+
 	scroll_sync = true, -- sync browser scroll to cursor position
 
 	-- Fraction (0–1): vertical position of the final line when scrolled to end.
@@ -95,6 +99,7 @@ local function write_index(dir)
 	end
 	local content = util.read_text(src)
 	content = content:gsub("__BOTTOM_PADDING__", tostring(M.config.bottom_padding))
+	content = content:gsub("__MERMAID_ELK__", M.config.mermaid_elk and "true" or "false")
 	util.write_text(dst, content)
 	return dst
 end

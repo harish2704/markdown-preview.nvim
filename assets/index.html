@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-bottom-padding="__BOTTOM_PADDING__">
+<html lang="en" data-theme="dark" data-bottom-padding="__BOTTOM_PADDING__" data-mermaid-elk="__MERMAID_ELK__">
 
 <head>
     <meta charset="utf-8" />
@@ -1427,6 +1427,10 @@
         // ── Boot ──────────────────────────────────────────────────────
         (async function boot() {
             try {
+                if (document.documentElement.dataset.mermaidElk === 'true') {
+                    const elkLayouts = await import('https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.1/dist/mermaid-layout-elk.esm.min.mjs');
+                    mermaid.registerLayoutLoaders(elkLayouts.default || elkLayouts);
+                }
                 applyTheme('dark');
                 await sync(true);
             } catch (e) {
